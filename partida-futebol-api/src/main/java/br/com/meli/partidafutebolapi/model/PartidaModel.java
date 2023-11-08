@@ -2,6 +2,8 @@ package br.com.meli.partidafutebolapi.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @Data
 
-public class Partida {
+public class PartidaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +39,5 @@ public class Partida {
     private LocalDateTime dataHoraPartida;
 
     @Column(name="estadio")
-    @NotBlank
     private String nomeEstadio;
 }
