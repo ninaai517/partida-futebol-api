@@ -2,6 +2,7 @@ package br.com.meli.partidafutebolapi.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name="tb_partida")
 @Getter
 @Setter
+@Data
 public class PartidaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
