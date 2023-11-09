@@ -16,4 +16,6 @@ public class AlteraPartidaDto {
     private int goalsVisitante;
     private String estadio;
     private LocalDateTime dataHoraPartida;
+
+    //
 }
