@@ -5,6 +5,7 @@ import br.com.meli.partidafutebolapi.dto.CadastroPartidaDto;
 import br.com.meli.partidafutebolapi.service.PartidaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +18,8 @@ public class PartidaController {
     public PartidaService service;
 
     @PostMapping
-    public void cadastrarPartida(@RequestBody @Valid CadastroPartidaDto cadastro){
-        service.cadastrarPartida(cadastro);
+    public ResponseEntity cadastrarPartida(@RequestBody @Valid CadastroPartidaDto cadastro){
+        return service.cadastrarPartida(cadastro);
     }
 
     @GetMapping()
@@ -32,8 +33,9 @@ public class PartidaController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deletePartida(@PathVariable Long id){
-        service.deletePartida(id);
+    public ResponseEntity deletePartida(@PathVariable Long id){
+
+        return service.deletePartida(id);
     }
 
 }

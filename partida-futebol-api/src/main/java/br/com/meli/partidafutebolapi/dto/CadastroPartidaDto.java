@@ -1,6 +1,6 @@
 package br.com.meli.partidafutebolapi.dto;
 
-import br.com.meli.partidafutebolapi.model.PartidaModel;
+import br.com.meli.partidafutebolapi.model.Partida;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +18,7 @@ public class CadastroPartidaDto {
     private LocalDateTime dataHoraPartida;
 
     public CadastroPartidaDto(){}
-    public CadastroPartidaDto(PartidaModel partida){
+    public CadastroPartidaDto(Partida partida){
         this.id = partida.getId();
         this.clubeMandante = partida.getClubeMandante();
         this.clubeVisitante = partida.getClubeVisitante();
