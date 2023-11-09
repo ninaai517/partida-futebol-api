@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class PartidaService {
     @Autowired
     public PartidaRepository repository;
-    public ResponseEntity cadastrarPartida(CadastroPartidaDto cadastro){
+    public void cadastrarPartida(CadastroPartidaDto cadastro){
         Partida partida = new Partida();
 
         partida.setClubeMandante(cadastro.getClubeMandante());
@@ -31,7 +31,6 @@ public class PartidaService {
 
         repository.save(partida);
 
-        return ResponseEntity.status(201).build();
     }
 
     public List<CadastroPartidaDto> getAllPartidas(){
@@ -60,18 +59,14 @@ public class PartidaService {
         }
     }
 
-    public ResponseEntity deletePartida(Long id){
+    public void deletePartida(Long id){
             Optional<Partida> partidas = repository.findById(id);
 
             if(partidas.isEmpty()){
-                return ResponseEntity.notFound().build();
-
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
             }else{
-
-                 repository.deleteById(id);
-                 return ResponseEntity.noContent().build();
+                repository.deleteById(id);
             }
-
     }
 
     private static List<CadastroPartidaDto> convertToListPartidasDto(List<Partida> partidas) {

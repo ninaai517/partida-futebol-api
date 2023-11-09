@@ -19,11 +19,14 @@ public class PartidaController {
 
     @PostMapping
     public ResponseEntity cadastrarPartida(@RequestBody @Valid CadastroPartidaDto cadastro){
-        return service.cadastrarPartida(cadastro);
+        service.cadastrarPartida(cadastro);
+
+        return ResponseEntity.status(201).build();
     }
 
     @GetMapping()
     public List<CadastroPartidaDto> getAllPartidas(){
+
         return service.getAllPartidas();
     }
 
@@ -35,7 +38,9 @@ public class PartidaController {
     @DeleteMapping(path = "/{id}")
     public ResponseEntity deletePartida(@PathVariable Long id){
 
-        return service.deletePartida(id);
+            service.deletePartida(id);
+
+            return ResponseEntity.noContent().build();
     }
 
 }
