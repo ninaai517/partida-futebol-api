@@ -48,7 +48,7 @@ public class BuscaService {
     public List<PartidaDto> getAllGoleadas(){
         List<Partida> partidas =
                 repository.findAll().stream().
-                filter(goals -> (goals.getGoalsMandante() - goals.getGoalsVisitante()) >= 3).
+                filter(partida -> (partida.getGoalsMandante() - partida.getGoalsVisitante()) >= 3).
                 collect(Collectors.toList());
 
         return convertToListPartidas(partidas);

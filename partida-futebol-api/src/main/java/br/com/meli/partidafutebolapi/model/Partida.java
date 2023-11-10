@@ -3,6 +3,7 @@ package br.com.meli.partidafutebolapi.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,9 +28,13 @@ public class Partida {
     private String clubeVisitante;
 
     @Column(name="resultado_mandante")
+    @NotNull
+    @PositiveOrZero
     private int goalsMandante;
 
     @Column(name="resultado_visitante")
+    @NotNull
+    @PositiveOrZero
     private int goalsVisitante;
 
     @Column(name="data_hora_partida")
