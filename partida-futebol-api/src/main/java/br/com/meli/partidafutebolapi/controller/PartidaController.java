@@ -2,6 +2,7 @@ package br.com.meli.partidafutebolapi.controller;
 
 import br.com.meli.partidafutebolapi.dto.AlteraPartidaDto;
 import br.com.meli.partidafutebolapi.dto.PartidaDto;
+import br.com.meli.partidafutebolapi.model.Partida;
 import br.com.meli.partidafutebolapi.service.BuscaService;
 import br.com.meli.partidafutebolapi.service.PartidaService;
 import jakarta.validation.Valid;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/partida")
@@ -37,6 +39,11 @@ public class PartidaController {
     @GetMapping("/{estadio}")
     public List<PartidaDto> getAllPartidasPorEstadio(@PathVariable String estadio){
         return buscaService.getAllEstadios(estadio);
+    }
+
+    @GetMapping("/zerogoals")
+    public List<Partida> getAllZeroGoals(){
+        return buscaService.getAllZeroGoals();
     }
 
     @PutMapping(path="/{id}")

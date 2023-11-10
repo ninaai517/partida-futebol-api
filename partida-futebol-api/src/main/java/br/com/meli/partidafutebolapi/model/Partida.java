@@ -38,4 +38,8 @@ public class Partida {
     @Column(name="estadio")
     @NotBlank
     private String nomeEstadio;
+
+
+
+
 }
