@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/partida")
@@ -44,6 +43,11 @@ public class PartidaController {
     @GetMapping("/zerogoals")
     public List<Partida> getAllZeroGoals(){
         return buscaService.getAllZeroGoals();
+    }
+
+    @GetMapping("/{clube}/{filtro}")
+    public List<PartidaDto> getAllPartidasByTeam(@PathVariable String clube, @PathVariable String filtro){
+        return buscaService.getAllPartidasByTeam(clube, filtro);
     }
 
     @PutMapping(path="/{id}")

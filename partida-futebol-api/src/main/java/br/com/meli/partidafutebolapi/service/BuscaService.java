@@ -4,8 +4,9 @@ import br.com.meli.partidafutebolapi.dto.PartidaDto;
 import br.com.meli.partidafutebolapi.model.Partida;
 import br.com.meli.partidafutebolapi.repository.PartidaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +23,26 @@ public class BuscaService {
 
         return convertToListPartidas(partidas);
 
+    }
+
+    public List<PartidaDto> getAllPartidasByTeam(String clube, String filtro){
+
+        switch (filtro){
+            case "allGames":
+                List<Partida> todasPartidas = repository.findAllByClubeMandanteOrClubeVisitante(clube, clube);
+                return convertToListPartidas(todasPartidas);
+
+            case "mandante":
+                List<Partida> mandante = repository.findAllByClubeMandante(clube);
+                return convertToListPartidas(mandante);
+
+            case "visitante":
+                List<Partida> visitante = repository.findAllByClubeVisitante(clube);
+                return convertToListPartidas(visitante);
+
+            default:
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     public List<Partida> getAllZeroGoals() {
