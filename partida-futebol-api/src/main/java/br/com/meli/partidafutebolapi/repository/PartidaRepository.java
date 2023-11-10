@@ -10,7 +10,6 @@ public interface PartidaRepository extends JpaRepository<Partida,Long> {
     List<Partida> findAllByNomeEstadioEqualsIgnoreCase(String estadio);
 
     List<Partida> findAllByClubeMandante(String clube);
-
     List<Partida> findAllByClubeVisitante(String clube);
     List<Partida> findAllByClubeMandanteOrClubeVisitante(String clubeMandante, String clubeVisitante);
 }

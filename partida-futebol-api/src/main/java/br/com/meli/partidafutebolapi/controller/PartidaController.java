@@ -50,6 +50,11 @@ public class PartidaController {
         return buscaService.getAllPartidasByTeam(clube, filtro);
     }
 
+    @GetMapping("/goleada")
+    public List<PartidaDto> getAllGoleadas(){
+        return buscaService.getAllGoleadas();
+    }
+
     @PutMapping(path="/{id}")
     public PartidaDto alterarPartida(@RequestBody AlteraPartidaDto alteraPartida , @PathVariable("id") Long id){
         return service.alteraPartida(alteraPartida, id);
