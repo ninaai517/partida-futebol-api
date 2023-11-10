@@ -1,13 +1,11 @@
 package br.com.meli.partidafutebolapi.service;
 
 import br.com.meli.partidafutebolapi.dto.AlteraPartidaDto;
-import br.com.meli.partidafutebolapi.dto.CadastroPartidaDto;
+import br.com.meli.partidafutebolapi.dto.PartidaDto;
 import br.com.meli.partidafutebolapi.model.Partida;
 import br.com.meli.partidafutebolapi.repository.PartidaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -19,7 +17,7 @@ import java.util.stream.Collectors;
 public class PartidaService {
     @Autowired
     public PartidaRepository repository;
-    public void cadastrarPartida(CadastroPartidaDto cadastro){
+    public void cadastrarPartida(PartidaDto cadastro){
         Partida partida = new Partida();
 
         partida.setClubeMandante(cadastro.getClubeMandante());
@@ -33,12 +31,12 @@ public class PartidaService {
 
     }
 
-    public List<CadastroPartidaDto> getAllPartidas(){
+    public List<PartidaDto> getAllPartidas(){
         List<Partida> partidas = repository.findAll();
         return convertToListPartidasDto(partidas);
     }
 
-    public CadastroPartidaDto alteraPartida(AlteraPartidaDto alteraPartida, Long id) {
+    public PartidaDto alteraPartida(AlteraPartidaDto alteraPartida, Long id) {
 
         Optional<Partida> partidas = repository.findById(id);
         if(partidas.isPresent()){
@@ -69,11 +67,11 @@ public class PartidaService {
             }
     }
 
-    private static List<CadastroPartidaDto> convertToListPartidasDto(List<Partida> partidas) {
-        return partidas.stream().map(CadastroPartidaDto::new).collect(Collectors.toList());
+    private static List<PartidaDto> convertToListPartidasDto(List<Partida> partidas) {
+        return partidas.stream().map(PartidaDto::new).collect(Collectors.toList());
     }
-    private CadastroPartidaDto convertToPartidaAlteradaDto(Partida partida) {
-        CadastroPartidaDto cadastro = new CadastroPartidaDto();
+    private PartidaDto convertToPartidaAlteradaDto(Partida partida) {
+        PartidaDto cadastro = new PartidaDto();
 
         cadastro.setId(partida.getId());
         cadastro.setClubeMandante(partida.getClubeMandante());

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class CadastroPartidaDto {
+public class PartidaDto {
     private Long id;
     private String clubeMandante;
     private String clubeVisitante;
@@ -17,8 +17,8 @@ public class CadastroPartidaDto {
     private String estadio;
     private LocalDateTime dataHoraPartida;
 
-    public CadastroPartidaDto(){}
-    public CadastroPartidaDto(Partida partida){
+    public PartidaDto(){}
+    public PartidaDto(Partida partida){
         this.id = partida.getId();
         this.clubeMandante = partida.getClubeMandante();
         this.clubeVisitante = partida.getClubeVisitante();
