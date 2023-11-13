@@ -6,11 +6,9 @@ import br.com.meli.partidafutebolapi.model.Partida;
 import br.com.meli.partidafutebolapi.repository.PartidaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,10 +25,7 @@ public class PartidaService {
             partida.setGoalsMandante(cadastro.getGoalsMandante());
             partida.setGoalsVisitante(cadastro.getGoalsVisitante());
             partida.setNomeEstadio(cadastro.getEstadio());
-
-            if(!(cadastro.validaHora())){
-                partida.setDataHoraPartida(cadastro.getDataHoraPartida());
-            }
+            partida.setDataHoraPartida(cadastro.getDataHoraPartida());
 
             repository.save(partida);
     }
@@ -51,11 +46,7 @@ public class PartidaService {
             partidaAlterada.setClubeVisitante(alteraPartida.getClubeVisitante());
             partidaAlterada.setGoalsMandante(alteraPartida.getGoalsMandante());
             partidaAlterada.setGoalsVisitante(alteraPartida.getGoalsVisitante());
-
-            if(!(alteraPartida.validaHora())){
-                partidaAlterada.setDataHoraPartida(alteraPartida.getDataHoraPartida());
-            }
-
+            partidaAlterada.setDataHoraPartida(alteraPartida.getDataHoraPartida());
             partidaAlterada.setNomeEstadio(alteraPartida.getEstadio());
 
             repository.save(partidaAlterada);

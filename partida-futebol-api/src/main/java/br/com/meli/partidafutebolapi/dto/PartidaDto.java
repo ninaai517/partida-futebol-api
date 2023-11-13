@@ -4,17 +4,15 @@ import br.com.meli.partidafutebolapi.model.Partida;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.ScriptAssert;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 public class PartidaDto {
     private Long id;
+
     private String clubeMandante;
+
     private String clubeVisitante;
 
     @NotNull
@@ -25,7 +23,6 @@ public class PartidaDto {
     @PositiveOrZero
     private Integer goalsVisitante;
 
-    @NotBlank
     private String estadio;
 
     @PastOrPresent
@@ -42,12 +39,4 @@ public class PartidaDto {
         this.estadio = partida.getNomeEstadio();
     }
 
-    public Boolean validaHora(){
-        Boolean verificaHr = this.dataHoraPartida.isAfter(LocalDateTime.now());
-
-        if(verificaHr){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-        return true;
-    }
 }
