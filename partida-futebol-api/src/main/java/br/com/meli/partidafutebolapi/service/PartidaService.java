@@ -6,9 +6,11 @@ import br.com.meli.partidafutebolapi.model.Partida;
 import br.com.meli.partidafutebolapi.repository.PartidaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,15 +22,17 @@ public class PartidaService {
     public void cadastrarPartida(PartidaDto cadastro){
         Partida partida = new Partida();
 
-        partida.setClubeMandante(cadastro.getClubeMandante());
-        partida.setClubeVisitante(cadastro.getClubeVisitante());
-        partida.setGoalsMandante(cadastro.getGoalsMandante());
-        partida.setGoalsVisitante(cadastro.getGoalsVisitante());
-        partida.setNomeEstadio(cadastro.getEstadio());
-        partida.setDataHoraPartida(cadastro.getDataHoraPartida());
+            partida.setClubeMandante(cadastro.getClubeMandante());
+            partida.setClubeVisitante(cadastro.getClubeVisitante());
+            partida.setGoalsMandante(cadastro.getGoalsMandante());
+            partida.setGoalsVisitante(cadastro.getGoalsVisitante());
+            partida.setNomeEstadio(cadastro.getEstadio());
 
-        repository.save(partida);
+            if(!(cadastro.validaHora())){
+                partida.setDataHoraPartida(cadastro.getDataHoraPartida());
+            }
 
+            repository.save(partida);
     }
 
     public List<PartidaDto> getAllPartidas(){
@@ -39,14 +43,21 @@ public class PartidaService {
     public PartidaDto alteraPartida(AlteraPartidaDto alteraPartida, Long id) {
 
         Optional<Partida> partidas = repository.findById(id);
+
         if(partidas.isPresent()){
             Partida partidaAlterada = partidas.get();
+
             partidaAlterada.setClubeMandante(alteraPartida.getClubeMandante());
             partidaAlterada.setClubeVisitante(alteraPartida.getClubeVisitante());
             partidaAlterada.setGoalsMandante(alteraPartida.getGoalsMandante());
             partidaAlterada.setGoalsVisitante(alteraPartida.getGoalsVisitante());
-            partidaAlterada.setDataHoraPartida(alteraPartida.getDataHoraPartida());
+
+            if(!(alteraPartida.validaHora())){
+                partidaAlterada.setDataHoraPartida(alteraPartida.getDataHoraPartida());
+            }
+
             partidaAlterada.setNomeEstadio(alteraPartida.getEstadio());
+
             repository.save(partidaAlterada);
 
             return convertToPartidaAlteradaDto(partidaAlterada);
