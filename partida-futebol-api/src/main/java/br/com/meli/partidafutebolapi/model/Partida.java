@@ -1,12 +1,14 @@
 package br.com.meli.partidafutebolapi.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.ScriptAssert;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Data
+
 public class Partida {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,20 +31,15 @@ public class Partida {
     private String clubeVisitante;
 
     @Column(name="resultado_mandante")
-    @NotNull
-    @PositiveOrZero
-    private int goalsMandante;
+    private Integer goalsMandante;
 
     @Column(name="resultado_visitante")
-    @NotNull
-    @PositiveOrZero
-    private int goalsVisitante;
+    private Integer goalsVisitante;
 
     @Column(name="data_hora_partida")
     private LocalDateTime dataHoraPartida;
 
     @Column(name="estadio")
-    @NotBlank
     private String nomeEstadio;
 
 

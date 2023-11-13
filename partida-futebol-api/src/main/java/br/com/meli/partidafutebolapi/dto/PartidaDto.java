@@ -1,6 +1,10 @@
 package br.com.meli.partidafutebolapi.dto;
 
 import br.com.meli.partidafutebolapi.model.Partida;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +16,16 @@ public class PartidaDto {
     private Long id;
     private String clubeMandante;
     private String clubeVisitante;
-    private int goalsMandante;
-    private int goalsVisitante;
+
+    @NotNull
+    @PositiveOrZero
+    private Integer goalsMandante;
+
+    @NotNull
+    @PositiveOrZero
+    private Integer goalsVisitante;
+
+    @NotBlank
     private String estadio;
     private LocalDateTime dataHoraPartida;
 

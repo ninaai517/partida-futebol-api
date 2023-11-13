@@ -24,7 +24,6 @@ public class PartidaController {
     public BuscaService buscaService;
 
     @PostMapping
-    @Validated
     public ResponseEntity cadastrarPartida(@RequestBody @Valid PartidaDto cadastro){
         service.cadastrarPartida(cadastro);
 
@@ -58,8 +57,7 @@ public class PartidaController {
     }
 
     @PutMapping(path="/{id}")
-    @Validated
-    public PartidaDto alterarPartida(@RequestBody AlteraPartidaDto alteraPartida , @PathVariable("id") Long id){
+    public PartidaDto alterarPartida(@RequestBody @Valid AlteraPartidaDto alteraPartida , @PathVariable("id") Long id){
         return service.alteraPartida(alteraPartida, id);
     }
 
