@@ -10,8 +10,10 @@ import java.time.LocalDateTime;
 public class AlteraPartidaDto {
     private Long id;
 
+    @NotBlank
     private String clubeMandante;
 
+    @NotBlank
     private String clubeVisitante;
 
     @NotNull
@@ -22,9 +24,11 @@ public class AlteraPartidaDto {
     @PositiveOrZero
     private Integer goalsVisitante;
 
+    @NotBlank
     private String estadio;
 
     @PastOrPresent
+    @NotNull
     private LocalDateTime dataHoraPartida;
 
 }
