@@ -1,10 +1,15 @@
 package br.com.meli.partidafutebolapi.dto;
 
 import br.com.meli.partidafutebolapi.model.Partida;
+import br.com.meli.partidafutebolapi.repository.PartidaRepository;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.aspectj.apache.bcel.Repository;
+
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -42,5 +47,6 @@ public class PartidaDto {
         this.dataHoraPartida = partida.getDataHoraPartida();
         this.estadio = partida.getNomeEstadio();
     }
+
 
 }
