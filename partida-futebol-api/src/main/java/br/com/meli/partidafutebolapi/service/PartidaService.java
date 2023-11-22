@@ -26,6 +26,8 @@ public class PartidaService {
         Partida partida = new Partida();
         validaIntervalo(cadastro.getClubeMandante(),cadastro.getDataHoraPartida());
         validaIntervalo(cadastro.getClubeVisitante(),cadastro.getDataHoraPartida());
+        validaEstadioEData(cadastro.getEstadio(), cadastro.getDataHoraPartida());
+
 
         partida.setClubeMandante(cadastro.getClubeMandante());
         partida.setClubeVisitante(cadastro.getClubeVisitante());
@@ -51,6 +53,7 @@ public class PartidaService {
 
             validaIntervalo(alteraPartida.getClubeMandante(),alteraPartida.getDataHoraPartida());
             validaIntervalo(alteraPartida.getClubeVisitante(),alteraPartida.getDataHoraPartida());
+            validaEstadioEData(alteraPartida.getEstadio(), alteraPartida.getDataHoraPartida());
 
             partidaAlterada.setClubeMandante(alteraPartida.getClubeMandante());
             partidaAlterada.setClubeVisitante(alteraPartida.getClubeVisitante());
@@ -76,6 +79,20 @@ public class PartidaService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }else{
             repository.deleteById(id);
+        }
+    }
+
+    private void validaEstadioEData(String nomeEstadio, LocalDateTime dataPartida){
+        List <Partida> estadios = repository.findAllByNomeEstadioEqualsIgnoreCase(nomeEstadio);
+        List <LocalDateTime> dataHora = estadios.stream()
+                .map(Partida::getDataHoraPartida)
+                .toList();
+
+        for(LocalDateTime data : dataHora){
+            if(data.isEqual(dataPartida)){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "Estádio já possui uma partida cadastrada nesta data");
+            }
         }
     }
 
