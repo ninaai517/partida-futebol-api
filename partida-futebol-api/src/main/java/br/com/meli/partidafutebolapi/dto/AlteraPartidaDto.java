@@ -28,6 +28,7 @@ public class AlteraPartidaDto {
     private String estadio;
 
     @PastOrPresent
+    @NotNull
     private LocalDateTime dataHoraPartida;
 
 }

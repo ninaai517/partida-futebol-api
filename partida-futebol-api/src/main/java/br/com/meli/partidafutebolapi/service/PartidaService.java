@@ -11,12 +11,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 @Service
 public class PartidaService {
@@ -24,10 +22,11 @@ public class PartidaService {
     public PartidaRepository repository;
     public void cadastrarPartida(PartidaDto cadastro){
         Partida partida = new Partida();
+
         validaIntervalo(cadastro.getClubeMandante(),cadastro.getDataHoraPartida());
         validaIntervalo(cadastro.getClubeVisitante(),cadastro.getDataHoraPartida());
         validaEstadioEData(cadastro.getEstadio(), cadastro.getDataHoraPartida());
-
+        validaHora(cadastro.getDataHoraPartida());
 
         partida.setClubeMandante(cadastro.getClubeMandante());
         partida.setClubeVisitante(cadastro.getClubeVisitante());
@@ -54,6 +53,7 @@ public class PartidaService {
             validaIntervalo(alteraPartida.getClubeMandante(),alteraPartida.getDataHoraPartida());
             validaIntervalo(alteraPartida.getClubeVisitante(),alteraPartida.getDataHoraPartida());
             validaEstadioEData(alteraPartida.getEstadio(), alteraPartida.getDataHoraPartida());
+            validaHora(alteraPartida.getDataHoraPartida());
 
             partidaAlterada.setClubeMandante(alteraPartida.getClubeMandante());
             partidaAlterada.setClubeVisitante(alteraPartida.getClubeVisitante());
@@ -82,6 +82,22 @@ public class PartidaService {
         }
     }
 
+    private void validaHora(LocalDateTime dataHora){
+        List<Partida> partidas = repository.findAll();
+        List <LocalDateTime> datas = partidas.stream().map(Partida::getDataHoraPartida).toList();
+
+        for(LocalDateTime data : datas){
+            Integer hora = data.getHour();
+            Integer  hr = dataHora.getHour();
+
+            if(hr != hora){
+                if(hr < 8 || hr > 22) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                            "Horario da partida permitido depois das 8 hrs e antes das 22 hrs");
+                }
+            }
+        }
+    }
     private void validaEstadioEData(String nomeEstadio, LocalDateTime dataPartida){
         List <Partida> estadios = repository.findAllByNomeEstadioEqualsIgnoreCase(nomeEstadio);
         List <LocalDateTime> dataHora = estadios.stream()

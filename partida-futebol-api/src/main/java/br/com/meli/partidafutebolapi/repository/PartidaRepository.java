@@ -12,6 +12,5 @@ public interface PartidaRepository extends JpaRepository<Partida,Long> {
     List<Partida> findAllByClubeMandante(String clube);
     List<Partida> findAllByClubeVisitante(String clube);
     List<Partida> findAllByClubeMandanteOrClubeVisitante(String clubeMandante, String clubeVisitante);
-
-    List<Partida> findAllByDataHoraPartida(LocalDateTime dataHr);
+    List<Partida> findAllByDataHoraPartida(LocalDateTime dataHora);
 }
