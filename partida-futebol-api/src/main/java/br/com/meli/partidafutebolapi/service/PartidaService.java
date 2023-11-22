@@ -105,10 +105,10 @@ public class PartidaService {
                 .toList();
 
         for(LocalDateTime data : dataHora){
-            if(data.isEqual(dataPartida)){
+
+            if(data.toLocalDate().isEqual(dataPartida.toLocalDate())){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                        "Estádio já possui uma partida cadastrada nesta data");
-            }
+                        "Estádio já possui uma partida cadastrada nesta data");}
         }
     }
 
