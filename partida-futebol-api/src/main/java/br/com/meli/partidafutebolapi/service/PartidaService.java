@@ -27,14 +27,14 @@ public class PartidaService {
         validaIntervalo(cadastro.getClubeMandante(),cadastro.getDataHoraPartida());
         validaIntervalo(cadastro.getClubeVisitante(),cadastro.getDataHoraPartida());
 
-            partida.setClubeMandante(cadastro.getClubeMandante());
-            partida.setClubeVisitante(cadastro.getClubeVisitante());
-            partida.setGoalsMandante(cadastro.getGoalsMandante());
-            partida.setGoalsVisitante(cadastro.getGoalsVisitante());
-            partida.setNomeEstadio(cadastro.getEstadio());
-            partida.setDataHoraPartida(cadastro.getDataHoraPartida());
+        partida.setClubeMandante(cadastro.getClubeMandante());
+        partida.setClubeVisitante(cadastro.getClubeVisitante());
+        partida.setGoalsMandante(cadastro.getGoalsMandante());
+        partida.setGoalsVisitante(cadastro.getGoalsVisitante());
+        partida.setNomeEstadio(cadastro.getEstadio());
+        partida.setDataHoraPartida(cadastro.getDataHoraPartida());
 
-            repository.save(partida);
+        repository.save(partida);
     }
 
     public List<PartidaDto> getAllPartidas(){
@@ -70,13 +70,13 @@ public class PartidaService {
     }
 
     public void deletePartida(Long id){
-            Optional<Partida> partidas = repository.findById(id);
+        Optional<Partida> partidas = repository.findById(id);
 
-            if(partidas.isEmpty()){
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-            }else{
-                repository.deleteById(id);
-            }
+        if(partidas.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }else{
+            repository.deleteById(id);
+        }
     }
 
     private void validaIntervalo(String clube,LocalDateTime data){
@@ -88,7 +88,7 @@ public class PartidaService {
 
         dataHora.forEach((dias ->{
             Duration duration = Duration.between(dias, data);
-            Long diferencaEntreDias = duration.toDays();
+            Long diferencaEntreDias = Math.abs(duration.toDays());
 
             if(diferencaEntreDias <= 2){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cadastro da partida permitido 2 dias depois da ultima partida");
