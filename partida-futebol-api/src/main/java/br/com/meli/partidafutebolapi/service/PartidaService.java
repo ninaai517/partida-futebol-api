@@ -5,12 +5,14 @@ import br.com.meli.partidafutebolapi.dto.PartidaDto;
 import br.com.meli.partidafutebolapi.model.Partida;
 import br.com.meli.partidafutebolapi.repository.PartidaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.convert.Jsr310Converters;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -86,16 +88,13 @@ public class PartidaService {
         List<Partida> partidas = repository.findAll();
         List <LocalDateTime> datas = partidas.stream().map(Partida::getDataHoraPartida).toList();
 
-        for(LocalDateTime data : datas){
-            Integer hora = data.getHour();
-            Integer  hr = dataHora.getHour();
+            LocalTime horarioLimiteMax = LocalTime.of(22,00,01);
+            LocalTime horarioLimiteMin = LocalTime.of(07,59,59);
+            LocalTime  hr = dataHora.toLocalTime();
 
-            if(hr != hora){
-                if(hr < 8 || hr > 22) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                            "Horario da partida permitido depois das 8 hrs e antes das 22 hrs");
-                }
-            }
+            if(hr.isBefore(horarioLimiteMin)   || hr.isAfter(horarioLimiteMax)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "Horario da partida permitido depois das 8 hrs e antes das 22 hrs");
         }
     }
     private void validaEstadioEData(String nomeEstadio, LocalDateTime dataPartida){
